@@ -52,3 +52,14 @@
     path: /etc/sudoers
     validate: 'visudo -cf %s'
   when: ansible_distribution in ['CentOS', 'Red Hat Enterprise Linux']
+
+- name: Disable swap devices in /etc/fstab
+  mount:
+    path: none
+    fstype: swap
+    state: absent
+    backup: yes
+
+- name: Disable swap
+  shell: |
+    swapoff -a

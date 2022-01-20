@@ -1,5 +1,10 @@
 ---
 
+- name: Check for masters clustering
+  set_fact:
+    k3s_masters_clustering: "{{ groups['master'] | length > 1 }}"
+  when: inventory_hostname == groups['master'][0]
+
 - name: Copy K3s service file
   register: k3s_service
   template:
